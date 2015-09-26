@@ -31,7 +31,7 @@ CLIENT *rp_17(char *host, int port)
 	
 	struct timeval wait = { 30, 0 };
 		
-	clnt = clntudp_bufcreate(&addr, RP, V1, wait, &sock, BUFSIZE, BUFSIZE);
+	clnt = clntudp_create(&addr, RP, V1, wait, &sock);
 	clnt_control(clnt, CLSET_TIMEOUT, (char *) &wait);
 	
 	if (clnt == NULL) {
