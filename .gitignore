@@ -30,3 +30,8 @@
 
 # Debug files
 *.dSYM/
+
+# project executables
+distributed_pipe_client
+distributed_pipe_server
+
