@@ -5,43 +5,8 @@
  */
 
 #include "distributed_pipe.h"
-#include <netdb.h>
 
 #define BUFSIZE 512
-
-CLIENT *rp_17(char *host, int port)
-{
-	CLIENT *clnt;
-
-	//~ clnt = clnt_create (host, RP, V1, "udp");
-	
-	struct sockaddr_in addr;
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons (port);
-
-	struct hostent *he;
-	if ( (he = gethostbyname(host) ) == NULL ) {
-	  exit(1);
-	}
-
-	/* copy the network address to sockaddr_in structure */
-	memcpy(&addr.sin_addr, he->h_addr_list[0], he->h_length);
-	
-	int sock = RPC_ANYSOCK;
-	
-	struct timeval wait = { 30, 0 };
-		
-	clnt = clntudp_create(&addr, RP, V1, wait, &sock);
-	clnt_control(clnt, CLSET_TIMEOUT, (char *) &wait);
-	
-	if (clnt == NULL) {
-		clnt_pcreateerror (host);
-		exit (1);
-	}
-
-	return clnt;
-}
-
 
 int
 main (int argc, char *argv[])

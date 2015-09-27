@@ -18,6 +18,7 @@ extern "C" {
 #define V1 17
 
 #if defined(__STDC__) || defined(__cplusplus)
+extern CLIENT * rp_17(char *host, int port);
 #define write 231
 extern  int * write_17(char **, CLIENT *);
 extern  int * write_17_svc(char **, struct svc_req *);
@@ -27,9 +28,16 @@ extern  char ** read_17_svc(void *, struct svc_req *);
 #define ping 233
 extern  int * ping_17(void *, CLIENT *);
 extern  int * ping_17_svc(void *, struct svc_req *);
+#define replicate_write 234
+extern  int * replicate_write_17(char **, CLIENT *);
+extern  int * replicate_write_17_svc(char **, struct svc_req *);
+#define replicate_read 235
+extern  int * replicate_read_17(void *, CLIENT *);
+extern  int * replicate_read_17_svc(void *, struct svc_req *);
 extern int rp_17_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
+extern CLIENT * rp_17();
 #define write 231
 extern  int * write_17();
 extern  int * write_17_svc();
@@ -39,6 +47,12 @@ extern  char ** read_17_svc();
 #define ping 233
 extern int * ping_17();
 extern int * ping_17_svc();
+#define replicate_write 234
+extern  int * replicate_write_17();
+extern  int * replicate_write_17_svc();
+#define replicate_read 235
+extern  int * replicate_read_17();
+extern  int * replicate_read_17_svc();
 extern int rp_17_freeresult ();
 #endif /* K&R C */
 

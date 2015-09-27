@@ -12,9 +12,9 @@ SOURCES_SVC.c =
 SOURCES_SVC.h = 
 SOURCES.x = distributed_pipe.x
 
-TARGETS_SVC.c = distributed_pipe_svc.c distributed_pipe_server.c   
+TARGETS_SVC.c = distributed_pipe_svc.c distributed_pipe_server.c distributed_pipe_clnt.c
 TARGETS_CLNT.c = distributed_pipe_clnt.c distributed_pipe_client.c   
-TARGETS = distributed_pipe.h   distributed_pipe_clnt.c distributed_pipe_svc.c distributed_pipe_client.c distributed_pipe_server.c
+TARGETS = distributed_pipe.h distributed_pipe_clnt.c distributed_pipe_svc.c distributed_pipe_client.c distributed_pipe_server.c
 
 OBJECTS_CLNT = $(SOURCES_CLNT.c:%.c=%.o) $(TARGETS_CLNT.c:%.c=%.o)
 OBJECTS_SVC = $(SOURCES_SVC.c:%.c=%.o) $(TARGETS_SVC.c:%.c=%.o)

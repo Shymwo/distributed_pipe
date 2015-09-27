@@ -9,6 +9,8 @@
 #define CYCLICSIZE 10
 #define BUFSIZE 512
 
+#define DEBUG 0
+
 static char* bufor[CYCLICSIZE] = { NULL };
 static int writeIndex = 0;
 static int readIndex = 0;
@@ -27,10 +29,10 @@ write_17_svc(char **argp, struct svc_req *rqstp)
 			writeIndex = 0;
 		}
 		result = 0;
-		printf("zapisalem\n");
+		if (DEBUG) printf("zapisalem\n");
 	} else {
 		result = -1;
-		printf("nie zapisalem\n");
+		if (DEBUG) printf("nie zapisalem\n");
 	}
 	
 	return &result;
@@ -51,13 +53,38 @@ read_17_svc(void *argp, struct svc_req *rqstp)
 		} else {
 			readIndex = 0;
 		}
-		printf("odczytalem\n");
+		if (DEBUG) printf("odczytalem\n");
 	} else {
 		result = NULL;
-		printf("nie odczytalem\n");
+		if (DEBUG) printf("nie odczytalem\n");
 	}
 
 	return &result;
+}
+
+int *
+replicate_write_17_svc(char **argp, struct svc_req *rqstp)
+{
+	static int result = 0;
+	
+	result = *write_17_svc(argp, rqstp);
+	if (DEBUG) printf("wynik replikacji zapisu: %d\n", result);
+	
+	return &result;	
+}
+
+int *
+replicate_read_17_svc(void *argp, struct svc_req *rqstp)
+{
+	static int result = 0;
+	
+	char ** msg = read_17_svc(NULL, rqstp);
+	if (*msg == NULL) {
+		result = -1;
+	}
+	if (DEBUG) printf("wynik replikacji odczytu: %d\n", result);
+	
+	return &result;	
 }
 
 int *
