@@ -146,10 +146,13 @@ main (int argc, char **argv)
 	servers = malloc(servers_num * sizeof(CLIENT *));
 
 	int s_port;
-	char s_host[255];	
+	char s_host[255];
+	struct timeval wait = { 0, 0 };
 	for (int i = 0; i < servers_num; i++) {
 		fscanf(fp, "%s %d\n", s_host, &s_port);
 		servers[i] = rp_17 (s_host, s_port);
+		clnt_control(servers[i], CLSET_TIMEOUT, (char *) &wait);
+		clnt_control(servers[i], CLSET_RETRY_TIMEOUT, (char *) &wait);
 	}
 	
 	register SVCXPRT *transp;

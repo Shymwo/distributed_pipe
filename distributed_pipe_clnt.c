@@ -29,10 +29,11 @@ rp_17(char *host, int port)
 	
 	int sock = RPC_ANYSOCK;
 	
-	struct timeval wait = { 30, 0 };
+	struct timeval wait = { 5, 0 };
 		
 	clnt = clntudp_create(&addr, RP, V1, wait, &sock);
 	clnt_control(clnt, CLSET_TIMEOUT, (char *) &wait);
+	clnt_control(clnt, CLSET_RETRY_TIMEOUT, (char *) &wait);
 	
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
@@ -43,7 +44,7 @@ rp_17(char *host, int port)
 }
 
 /* Default timeout can be changed using clnt_control() */
-static struct timeval TIMEOUT = { 25, 0 };
+static struct timeval TIMEOUT = { 5, 0 };
 
 int *
 write_17(char **argp, CLIENT *clnt)
